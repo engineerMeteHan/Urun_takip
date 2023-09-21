@@ -1,3 +1,13 @@
+/******************************************************************************
+ ** Metehan GENCER - https://www.linkedin.com/in/metehan-gen%C3%A7er-733770134/
+                   - https://github.com/engineerMeteHan
+
+    Project Name : Ürün Takip Yazýlýmý
+    Date         : 01/09/2021
+    Version      : V 0.2
+    File Name    : urun.h
+******************************************************************************/
+
 #ifndef URUN_H_INCLUDED
 #define URUN_H_INCLUDED
 

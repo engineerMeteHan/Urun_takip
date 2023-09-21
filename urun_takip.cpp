@@ -1,3 +1,13 @@
+/******************************************************************************
+ ** Metehan GENCER - https://www.linkedin.com/in/metehan-gen%C3%A7er-733770134/
+                   - https://github.com/engineerMeteHan
+
+    Project Name : Ürün Takip Yazılımı
+    Date         : 01/09/2021
+    Version      : V 0.2
+    File Name    : urun_takip.cpp
+******************************************************************************/
+
 #include <iostream>
 #include <conio.h>
 
@@ -20,7 +30,7 @@ int main() {
     // Information will be written on the screen
     printf("Metehan GENCER\n");
     printf("01 - 09 - 2021\n");
-    printf("Erciyes Universitesi M�hendislik Fakultesi\n");
+    printf("Erciyes Universitesi Mühendislik Fakultesi\n");
     printf("https://www.linkedin.com/in/metehan-gen%C3%A7er-733770134/");
     printf("PROJE: Nesneye Dayali Programlama\n");
     printf("Surum: 0.2\n\n");
@@ -243,7 +253,7 @@ int main() {
 
                     case 1: // Entered Correctly
 
-                        dizin.UrunAdres(girdi)->UrunYaz(1); /* �r�n bilgileri getirilir. */
+                        dizin.UrunAdres(girdi)->UrunYaz(1); /* Ürün bilgileri getirilir. */
                         dizin.UrunAdres(girdi)->SatislariListele(); /* Satis bilgileri ekrana yazilir. */
                         break;
                     case 0:

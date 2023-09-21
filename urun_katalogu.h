@@ -1,3 +1,13 @@
+/******************************************************************************
+ ** Metehan GENCER - https://www.linkedin.com/in/metehan-gen%C3%A7er-733770134/
+                   - https://github.com/engineerMeteHan
+
+    Project Name : Ürün Takip Yazılımı
+    Date         : 01/09/2021
+    Version      : V 0.2
+    File Name    : urun_katalogu.h
+******************************************************************************/
+
 #ifndef URUN_KATALOGU_H_INCLUDED
 #define URUN_KATALOGU_H_INCLUDED
 
@@ -197,7 +207,7 @@ int URUN::satisSil(int fatno) {
 
             } while (gezinti != NULL);
 
-            // If �t has come this far, no element to be deleted has been found
+            // If þt has come this far, no element to be deleted has been found
             return -1;
        }
     }
