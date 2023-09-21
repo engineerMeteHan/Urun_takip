@@ -4,7 +4,7 @@
 class URUN {
 
     private:
-        /* Nesne yerel deðiþkenleri */
+        // Object local variables
         int urun_kodu;
         char urun_adi[20];
         float birim_alis_fiyati;
@@ -13,10 +13,10 @@ class URUN {
         SATIS *link;
 
     public:
-        /* Nesne yaratma metodu */
+        // Object creation method
         URUN(int, char*,float,int=0);
 
-        /* Getter Metodlar */
+        // Getter Methods
         int kodOku();
         char *adOku();
         float alisFiyatiOku();
@@ -24,20 +24,18 @@ class URUN {
         URUN *sonrakiOku();
         SATIS *linkOku();
 
-        /* Setter Metodlar */
+        // Setter Methods
         void alisFiyatiYaz(float);
         void stokMiktariYaz(int);
         void sonrakiYaz(URUN *);
         void linkYaz(SATIS *);
 
-        /* Ekrana Yazdýrma */
+        // Screen printing
         void UrunYaz(int=-1);
         void SatislariListele();
 
-        /* Satis Bilgisini Ürüne Ýþleme */
+        // Adding sales information to the product
         int satisEkle(SATIS *);
-
-        /* Satýþ BilgileriniHavaya Uçurma */
         int satisSil(int);
 
 };

@@ -8,8 +8,8 @@
 using namespace std;
 
 URUNKATALOGU::URUNKATALOGU() {
-    /* Nesne yaratýlýrken tüm kayýtlar NULL'u
-       göstersin, sonra sakatlýk çýkmasýn. */
+    /* All records should show NULL while the object
+       is being created, so that no problems arise later. */
     int sayac;
     for (sayac = 0;sayac<100;sayac++) {
         hashTablosu[sayac] = NULL;
@@ -18,51 +18,53 @@ URUNKATALOGU::URUNKATALOGU() {
 
 int URUNKATALOGU::UrunVarMi(int urun_kodu) {
 
-    /* 1: Ürün var
-       0: Ürün yok */
+    // 1: There is product
+    // 0: No product
 
     URUN *guncel;
 
     guncel = hashTablosu[hash(urun_kodu)];
 
-    while(guncel != NULL) { /* Kayýtlar bitene kadar */
+    while(guncel != NULL) { // Until registration ends.
 
         if (guncel->kodOku() == urun_kodu) {
             return 1;
         }
 
-        guncel = guncel->sonrakiOku(); /* Bir sonraki kayýda bak. */
+        guncel = guncel->sonrakiOku();  // Look at the next entry
     }
 
-    return 0; /* Eðer buraya geldiyse eþleþme yok demektir. */
+    return 0; // If it landed here, it means there is no match
 }
 
 URUN* URUNKATALOGU::UrunAdres(int urun_kodu) {
 
-    /* Geriye ürünün adresini gönderir. */
+    // It shows the address of the product
 
     URUN *guncel;
 
     guncel = hashTablosu[hash(urun_kodu)];
 
-    while(guncel != NULL) { /* Kayýtlar bitene kadar */
+    while(guncel != NULL) { // Until registration ends
 
         if (guncel->kodOku() == urun_kodu) {
             return guncel;
         }
 
-        guncel = guncel->sonrakiOku(); /* Bir sonraki kayýda uçalým. */
+        guncel = guncel->sonrakiOku(); // Look at the next entry
     }
 
-    return NULL; /* Eðer buraya geldiyse bir sakatlýk var demektir, ama gelmez. :) */
+    return NULL; // If it comes here, there is a problem, but it does not come
 }
 
 void URUNKATALOGU::UrunEkle(URUN *YeniUrun) {
 
     URUN *gecici;
 
-    /* Eðer HashTablosu zaten boþsa yerleþtirip geçelim.
-       Yok eðer doluysa baðlantýlarý da ayarlayalým.  */
+    /* If the HashTable is already empty,
+       let's insert it and pass. No, if it is full,
+       let's adjust the connections. */
+
     gecici = hashTablosu[hash(YeniUrun->kodOku())];
 
     hashTablosu[hash(YeniUrun->kodOku())] = YeniUrun;
@@ -112,11 +114,11 @@ void URUNKATALOGU::tumUrunTopSatis() {
 
         while (guncel != NULL) {
 
-            /* Satýþlarla ilgili gerekli hesaplamalarý yapalým */
+            // Let's make the necessary calculations regarding sales
             satis_urun = 0;
             ciro_urun = 0L;
 
-            if (guncel->linkOku() != NULL) { /* heheee çökertemezsiniz */
+            if (guncel->linkOku() != NULL) {/
                 gezinti = guncel->linkOku();
                 while (gezinti != NULL) {
                     satis_urun += gezinti->miktarOku();
@@ -131,7 +133,7 @@ void URUNKATALOGU::tumUrunTopSatis() {
             ciro_top += ciro_urun;
             satis_top += satis_urun;
 
-            guncel = guncel->sonrakiOku(); /* Bir sonraki kayýda uçalým. */
+            guncel = guncel->sonrakiOku(); // Look at the next entry
 
         }
     }
@@ -154,16 +156,16 @@ void URUNKATALOGU::satilmayanlariListele(char *tarih_limit) {
 
         while (guncel != NULL) {
 
-            if (guncel->linkOku() != NULL) { /* heheee çökertemezsiniz */
+            if (guncel->linkOku() != NULL) {
                 gezinti = guncel->linkOku();
                 if(strncmp(gezinti->tarihOku(),tarih_limit,6)<0) {
                     printf("%9d %20s\n",guncel->kodOku(),guncel->adOku());
                 }
-            } else { /* Hiç satýþ yapýlmamýþ */
+            } else { // No sales were made
                 printf("%9d %20s\n",guncel->kodOku(),guncel->adOku());
             }
 
-            guncel = guncel->sonrakiOku(); /* Bir sonraki kayýda uçalým. */
+            guncel = guncel->sonrakiOku(); // Look at the next entry
         }
     }
 
@@ -174,19 +176,19 @@ void URUNKATALOGU::satilmayanlariListele(char *tarih_limit) {
 
 int URUNKATALOGU::UrunSil(int girdi) {
 
-    /* Bu metotta satýþlar silinirken satissil metodu
-       çaðýrýlabilirdi. Ancak bu metot fatura numarasý
-       verilen satýþý sildikten sonra tüm baðlantýlarý
-       da teker teker ayarlayacaktýr. Halbuki toptan
-       tüm satýþlarý sileðimizden bu ayarlamalarý yapmak
-       etkin olmayacaktýr.                            */
+    /* In this method, the sales method could be
+       called while deleting sales. However,
+       this method will adjust all connections one by one
+       after deleting the sale with the invoice number.
+       However, making these adjustments as we delete
+       all wholesale sales will not be effective. */
 
     SATIS *sil_konum;
     SATIS *gecici;
     URUN *gecici2;
     URUN *dolas;
 
-    /* Ürüne baðlý satýþlarý silelim */
+    // Let's delete product-related sales
     sil_konum = UrunAdres(girdi)->linkOku();
     while(sil_konum!=NULL) {
         gecici = sil_konum;;
@@ -194,27 +196,26 @@ int URUNKATALOGU::UrunSil(int girdi) {
         delete (gecici);
     }
 
-    /* Silmeden önce hashtablosu ya da baðlantýlarda gerekli
-       hödöleri ayarlamalýyýz.                            */
+    // Before deleting, we must set the necessary statuses in the hashtable or connections.
 
     if (hashTablosu[hash(girdi)] == UrunAdres(girdi)) {
-    /* Durum 1: Ürün Hash tablosuna baðlý ilk ürün. */
+    // Case 1: The first product connected to the product hashtable.
 
-        /* Ayrýntýlý bilgi için commenti kaldýrýn. */
+        // Remove comment for details
         printf("Urun hash tablosunda.\n");
 
         gecici2 = hashTablosu[hash(girdi)];
         hashTablosu[hash(girdi)] = hashTablosu[hash(girdi)]->sonrakiOku();
         delete (gecici2);
 
-        return 0; /* Ýþlem tamam, gidiyorum ben. */
+        return 0; // The process is complete
 
     }
 
     if (hashTablosu[hash(girdi)]->sonrakiOku() == UrunAdres(girdi)) {
-    /* Durum 2: Ürün hash tablosundaki ilk ürüne baðlý ikinci ürün. */
+    // Case 2: Second product linked to first product in product hashtable
 
-        /* Ayrýntýlý bilgi için commenti kaldýrýn. */
+        // Remove comment for details
         printf("Urun hash tablosundan hemen sonra.\n");
 
         gecici2 = hashTablosu[hash(girdi)]->sonrakiOku();
@@ -225,20 +226,20 @@ int URUNKATALOGU::UrunSil(int girdi) {
 
     }
 
-    /* Durum 3: Ürün baþka diyarlarda. */
+    // The product is elsewhere
 
-    /* Ayrýntýlý bilgi için commenti kaldýrýn. */
+    // Remove comment for detail
     printf("Urun aralarda bir yerlerde.\n");
 
     dolas = hashTablosu[hash(girdi)]->sonrakiOku();
 
-    /* Silinecek üründen bir önceki ürünü bulalým. */
+    // Let's find the product before the product to be deleted
     while (dolas->sonrakiOku() != UrunAdres(girdi)) {
             dolas = dolas->sonrakiOku();
     }
 
-    /* Buraya gelince silinecek üründen bir önecki ürünün
-       bellek adresi dolas olur. */
+    /* When it comes here, the memory address of the
+       product before the product to be deleted is browsed */
 
     gecici2 = UrunAdres(girdi);
     dolas->sonrakiYaz(UrunAdres(girdi)->sonrakiOku());

@@ -8,8 +8,8 @@
 using namespace std;
 
 void beklet() {
-    /* Bu fonksiyonun tek amaci kullaniciyi bir tusa basana kadar
-       bekletmek, ve sonra ekrani silmektir. */
+    /* The sole purpose of this function is to make the user
+       wait until they press a key, and then clear the screen. */
     printf("\nDevam etmek icin bir tusa basin.");
     getch();
     system ("cls");
@@ -17,14 +17,14 @@ void beklet() {
 
 int main() {
 
-    /* Acilis yazilari BASLANGICI */
+    // Information will be written on the screen
     printf("Metehan GENCER\n");
     printf("01 - 09 - 2021\n");
     printf("Erciyes Universitesi Mühendislik Fakultesi\n");
     printf("https://www.linkedin.com/in/metehan-gen%C3%A7er-733770134/");
     printf("PROJE: Nesneye Dayali Programlama\n");
     printf("Surum: 0.2\n\n");
-    /* Acilis yazilari SONU */
+    // End of information
 
     int sag_serbest=-1;
     char secenek;
@@ -38,17 +38,17 @@ int main() {
     char girdi5[6];
     int girdi6;
 
-    /* Girdi degiskenleri main fonksiyonun her bir yerinde
-       farkli farkli bir sürü amaçla kullanýldýðý için
-       özel isimler vermedim. */
+    /* Since the input variables are used for many different
+       purposes in each part of the main function,
+       I did not give them special names. */
 
-    /* Ürün Kataloðu nesnesi yarat */
+   // Create a Product Catalog object.
    URUNKATALOGU dizin;
 
-    /* Ana döngü */
+    // Main Loop
     while (sag_serbest==-1) {
 
-        /* menu BASLANGICI */
+        // Menu Start
         printf("*** Menu *** \n\n");
         printf("1. Yeni bir urunun eklenmesi \n");
         printf("2. Bir urunun birim alis fiyatinin ve stok miktarinin guncellenmesi \n");
@@ -63,12 +63,12 @@ int main() {
         printf("C. Cikis \n");
 
         printf("Lutfen istediginiz islemin numarasini giriniz.\n");
-        /*menu BITIMI */
+        // End of Menu
 
         secenek=getch();
         system ("cls");
 
-        /* secenek getche ile alýndýðý için ASCII koduna göre switch yapýsýna sokulabilir. */
+        // Since the option is received via getche, it can be inserted into the switch structure according to the ASCII code.
         switch(secenek) {
             case 49: //1
                 system ("cls");
@@ -78,7 +78,7 @@ int main() {
 
                 switch (dizin.UrunVarMi(girdi)) {
 
-                   case 0: /* Yaþasýn doðru girmiþler. */
+                   case 0: // Entered correctly
 
                         for (sayac=0;sayac<20;sayac++) {
                             girdi2[sayac] = 0;
@@ -114,7 +114,7 @@ int main() {
 
                 switch (dizin.UrunVarMi(girdi)) {
 
-                    case 1: /* Yaþasýn doðru girmiþler. */
+                    case 1: // Entered correctly
 
                         printf("Urunun yeni alis fiyatini giriniz: ");
                         scanf("%f",&girdi3);
@@ -145,7 +145,7 @@ int main() {
 
                 switch (dizin.UrunVarMi(girdi)) {
 
-                    case 1: /* Evet var. */
+                    case 1: // Yes there is
 
                         printf("Fatura no giriniz: ");
                         scanf("%d",&girdi4);
@@ -156,10 +156,9 @@ int main() {
 
                         while (girdi5[0] == 0) {
                             fflush(stdin);
-                            /* Ödevin asýl amacýnýn tarihlerle deðil de
-                               nesnelerle uðraþmak olduðu bilindiðinden
-                               2000 öncesi yýllar için sýralama sorunu
-                               ihmal edildi.
+                            /* Knowing that the main purpose of the project was
+                               to deal with objects, not dates, the sorting problem
+                               was neglected for the years before 2000.
                             */
                             printf("Satis tarihini giriniz (YYAAGG): ");
                             gets(girdi5);
@@ -175,7 +174,7 @@ int main() {
                         printf("Islem tamam.");
                         break;
 
-                    case 0: /* Hayýr, yok */
+                    case 0: // No, there is not
                         printf("Boyle bir urun yok.");
                         break;
                 }
@@ -189,7 +188,7 @@ int main() {
 
                 switch (dizin.UrunVarMi(girdi)) {
 
-                    case 1: /* Yaþasýn doðru girmiþler. */
+                    case 1: // Entered correctly
 
                         system ("cls");
                         printf("Silinecek satisin fatura nosu: ");
@@ -223,7 +222,7 @@ int main() {
 
                 switch (dizin.UrunVarMi(girdi)) {
 
-                    case 1: /* Yaþasýn doðru girmiþler. */
+                    case 1: // Entered Correctly
 
                         dizin.UrunSil(girdi);
                         printf("Sildim bile.");
@@ -242,7 +241,7 @@ int main() {
 
                 switch (dizin.UrunVarMi(girdi)) {
 
-                    case 1: /* Yaþasýn doðru girmiþler. */
+                    case 1: // Entered Correctly
 
                         dizin.UrunAdres(girdi)->UrunYaz(1); /* Ürün bilgileri getirilir. */
                         dizin.UrunAdres(girdi)->SatislariListele(); /* Satis bilgileri ekrana yazilir. */
@@ -265,10 +264,9 @@ int main() {
 
                 while (girdi5[0] == 0) {
                     fflush(stdin);
-                    /* Ödevin asýl amacýnýn tarihlerle deðil de
-                       nesnelerle uðraþmak olduðu bilindiðinden
-                       2000 öncesi yýllar için sýralama sorunu
-                       ihmal edildi.
+                    /* Since it was known that the main purpose of the project
+                       was to deal with objects, not dates, the sorting problem
+                       was neglected for the years before 2000.
                     */
                     printf("Ne zamandan beri? (YYAAGG): ");
                     gets(girdi5);
@@ -299,21 +297,22 @@ int main() {
                 break;
             case 99: //c
             case 67: //C
-                /* E e H h ve disinda girdi kabul etmeyen cikmak istiyor musunuz sorusu BASLANGICI */
+
+                //It does not accept input other than E e H h and do you want to exit question START
                 do {
-                    printf ("\nCidden cikmak istiyor musunuz? (E/H) ");
+                    printf ("\nCikmak istiyor musunuz? (E/H) ");
                     secenek = getche();
                     if (secenek == 'E' || secenek == 'e') {
                         sag_serbest = 0;
                         secenek = 'H';
                     }
                 } while (secenek != 'H' && secenek != 'h');
-                /* E e H h ve disinda girdi kabul etmeyen cikmak istiyor musunuz sorusu SONU */
+                // END of the question Do you want to exit, which does not accept input other than E e H h and.
                 system ("cls");
                 break;
             default:
-                /* Elleri yanlis tusa basan kullanicilar icin yazilan bolum BASLANGICI */
-                printf("Bir zahmet 1'den 9'a kadar bir secim yapin.");
+                // The section written for users whose hands press the wrong button is the START.
+                printf("1'den 9'a kadar bir secim yapin.");
                 beklet();
                 /* Elleri yanlis tusa basan kullanicilar icin yazilan bolum SONU */
                 break;

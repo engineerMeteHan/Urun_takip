@@ -8,7 +8,7 @@
 using namespace std;
 
 URUN::URUN(int a,char b[20],float c,int d) {
-    /* Nesne yaratýlýrken veriler yerli yerine yerleþtirilir. */
+    // Data is placed in its place when the object is created
     int sayac;
 
     urun_kodu = a;
@@ -74,39 +74,25 @@ void URUN::UrunYaz(int ayrinti) {
 
 int URUN::satisEkle(SATIS *adres) {
 
-    /* Bu metod Ödev 3'deki fonskiyonumun nesneli
-       hale dönüþtürülmüþ halidir.
-       Ödev 3 teslim edildikten sonra kaynak kodunu
-       Ýnternet'te yayýmladýðým için baþkalarý tarafýndan
-       kullanýlýyor olabilir.
-
-       Bu yüzden baþka bir ödevde bu koda benzer bir kod
-       kullanýlýyor olabilir.
-
-       Ödev 3'ün Internet'teki konumu:
-        http://www.ubenzer.com/odev-3-baglacli-listeler/
-       */
-
     SATIS *gezinti;
     SATIS *onceki;
 
-    /* Durum 1: Daha önce satýþ eklenmemiþ olabilir. */
+    // Case 1: Sales mey not have been added before
 
-    if (link == NULL) { /* daha önce ürün eklemesi yapýlmamýþ. hemen ekliyoruz. */
+    if (link == NULL) { // No product has been added before. We add it immediately
         adres->sonrakiYaz(NULL);
         link = adres;
     } else {
 
-        /* Durum 2: Yeni eklenen satýþ þimdiye kadarkilerin en büyüðü olabilir ki
-           ürünler kýsmýnda deðiþiklik gerekir. */
+        // Case 2: The newly added sale may be the largest ever, requiring changes to the products section.
         if(strncmp(adres->tarihOku(),link->tarihOku(),6)>0) {
             adres->sonrakiYaz(link);
             link = adres;
         } else {
-            /* Durum 3: Yeni eklenen herhangi bir arada ya da en sonda olabilir. */
-            gezinti = link; /* Gezintiye ilk kaydýn adresini ata */
+            // Case 3: The newly added can be any in between or at the end
+            gezinti = link; // Assign the address of the first recort to the gezinti
 
-            do  { /* Son kayda kadar */
+            do  { // Until the last recording
 
                 if(strncmp(adres->tarihOku(),gezinti->tarihOku(),6) > 0) {
 
@@ -136,12 +122,12 @@ void URUN::SatislariListele() {
     printf("FATURA NO SATIS TARIHI SATIS MIKTARI BIRIM SATIS FIYATI\n");
     printf("--------- ------------ ------------- ------------------\n");
 
-    if (link == NULL) { /* heheee çökertemezsiniz */
+    if (link == NULL) { /* heheee Ã§Ã¶kertemezsiniz */
         printf("(satis kaydi yok)\n");
     } else {
         gezinti = link;
         while (gezinti != NULL) {
-            tarih = gezinti->tarihOku(); /* dizi sonunda NULL olamdýðýndan bu þekilde okunmazsa sorun çýkarýyor. */
+            tarih = gezinti->tarihOku(); /* dizi sonunda NULL olamdÃ½Ã°Ã½ndan bu Ã¾ekilde okunmazsa sorun Ã§Ã½karÃ½yor. */
             printf("   %6d       %c%c%c%c%c%c %13d %18.4f \n",gezinti->faturaNoOku(),tarih[0],tarih[1],tarih[2],tarih[3],tarih[4],tarih[5],gezinti->miktarOku(),gezinti->birimFiyatOku());
             gezinti = gezinti->sonrakiOku();
        }
@@ -150,19 +136,19 @@ void URUN::SatislariListele() {
 
 int URUN::satisSil(int fatno) {
 
-    /* Dikkat: Bu metot bir ürüne ait satýþlardaki tüm
-       fatura numaralarýnýn farklý olacaðý öngörülerek
-       yazýlmýþtýr.                                     */
+    /* Attention: This method was written with the
+       expectation that all invoice numbers dor sales of
+       a product will be different
+    */
 
     SATIS *gezinti;
     SATIS *onceki;
 
-    /* Durum 1: Liste zaten boþ olablir. */
+    // Case 1: The list may already be empty
     if (link == NULL) {
         return -1;
     } else {
-        /* Durum 2: Silinecek kayýt ilk kayýt olabiir ki
-           ürünler kýsmýnda deðiþiklik gerekir. */
+        // Case 2: The recÄ±rd to be deleted may be the first record that requires changes in the production sectio
         if(fatno == link->faturaNoOku()) {
 
             gezinti = link;
@@ -170,13 +156,10 @@ int URUN::satisSil(int fatno) {
             delete (gezinti);
 
         } else {
-            /* Durum 3: Silinecek herhangi bir arada ya da en sonda olabilir. */
-            gezinti = link; /* Gezintiye ilk kaydýn adresini ata */
+            // Case 3: To be deleted can be any intermediate or last
+            gezinti = link; //Assign the address of the first record to the gezint
 
-            /* Burada onceki = gezinti'ye ihtiyacým yok, çünkü do while'daki þart ilk
-            giriþte KESÝNLÝKLE saðlanmayacak. */
-
-            do  { /* Son kayda kadar */
+            do  { // Until the last recording
 
                 if(fatno == gezinti->faturaNoOku()) {
 
@@ -190,7 +173,7 @@ int URUN::satisSil(int fatno) {
 
             } while (gezinti != NULL);
 
-            /* Buraya kadar geldiyse silinecek eleman bulunamamýþtýr. */
+            // If it has come this far, no element to be deleted has been found
             return -1;
        }
     }

@@ -4,7 +4,7 @@
 class SATIS {
 
     private:
-        /* Nesne yerel deðiþkenleri */
+        // Object local variables
         int fatura_no;
         char satis_tarihi[6];
         int satis_miktari;
@@ -12,17 +12,17 @@ class SATIS {
         SATIS *sonraki;
 
     public:
-        /* Nesne yaratma metodu */
+        // Object creation method
         SATIS(int,char*,int,float);
 
-        /* Getter Metodlar */
+        /* Getter Methods */
         int faturaNoOku();
         char *tarihOku();
         int miktarOku();
         float birimFiyatOku();
         SATIS *sonrakiOku();
 
-        /* Setter Metodlar */
+        /* Setter Methods */
         void sonrakiYaz(SATIS*);
 
 };

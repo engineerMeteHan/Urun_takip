@@ -8,7 +8,7 @@
 using namespace std;
 
 SATIS::SATIS(int a,char b[6],int c,float d) {
-    /* Nesne yaratılırken veriler yerli yerine yerleştirilir. */
+    // When the object is created, the data is placed in its place.
     int sayac;
 
     fatura_no = a;
